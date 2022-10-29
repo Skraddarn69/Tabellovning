@@ -10,6 +10,17 @@ function hamtaLarare(page) {
             }
         })
         .then(function(data) {
-            appendTeachers(data, page);
+            fyllMenyLarare(data, page);
         })
+}
+
+function fyllMenyLarare(data, page) {
+    // Ange href för tillbaka-knappen
+    document.getElementById("tillbaka").href = "index.html";
+
+    let meny = document.getElementById("meny-tabell").getElementsByTagName("td");
+    let cell;
+    for(let i = 0; i < 9; i++) {
+        cell = meny.item(i);
+    }
 }
