@@ -9,12 +9,13 @@
             <h1>Tabellträning</h1>
         </header>
         <main>
-            <form id="login" method="post">
+            <form id="login" method="post" action="login.php">
                 <label for="username">Användarnamn:</label>
                 <input name="username" type="text"><br>
                 <label for="password">Lösenord:</label>
                 <input name="password" type="password"><br>
                 <input type="submit" value="Logga in">
+                <input id="userType" name="userType" type="hidden" value="">
             </form>
         </main>
     </body>
