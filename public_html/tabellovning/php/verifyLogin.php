@@ -1,6 +1,6 @@
 <?php
 declare (strict_types=1);
-require_once 'funktioner.php';
+require_once 'functions.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];
