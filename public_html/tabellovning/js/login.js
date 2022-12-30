@@ -4,26 +4,19 @@ window.onload = function() {
     urlParams = new URLSearchParams(queryString);
     let userType = urlParams.get('userType');
 
-    // Lägger till användartyp i html-formulär
-    document.getElementById("userType").value = userType;
-
-    // Hämta formulärsdata
-    let username = document.getElementsByName("username")[0].value;
-    let password = document.getElementsByName("password")[0].value;
-
     // Sätter onclick-attribut på login-knapp
-    document.getElementById("login").onsubmit = function() {
-        const options = {
-            method: "POST"
-        };
-        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/verifyLogin.php?username=' + username + "&password=" + password + "&userType=" + userType, options)
+    document.getElementById("loginButton").onclick = function() {
+        // Hämta formulärsdata
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+
+        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/verifyLogin.php?username=' + username + "&password=" + password + "&userType=" + userType)
             .then(function(response) {
                 if(response.status == 200) {
                     return response.json();
                 }
             })
             .then(function(data) {
-                console.log(data);
                 if(data.loginStatus) {
                     console.log("Hej");
                 } else {
