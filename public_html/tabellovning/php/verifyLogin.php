@@ -2,6 +2,13 @@
 declare (strict_types=1);
 require_once 'functions.php';
 
+# Kollar så att anropet skickats via POST
+if($_SERVER['REQUEST_METHOD']!=="POST") {
+    $error = new stdClass();
+    $error -> error = ["Felaktigt anrop", "Sidan ska anropas med POST"];
+    skickaSvar($error, 405);
+}
+
 # Tar emot POST-input
 $username = filter_input(INPUT_POST, 'username', FILTER_UNSAFE_RAW);
 $username = strip_tags($username);
@@ -28,33 +35,34 @@ if($userType!=0 && $userType!=1 || $userType==="") {
     skickaSvar($error, 400);
 }
 
+# Skapar sql-sats
 if($userType===0) {
     $sql = "SELECT losenord FROM larare WHERE anvandarnamn=:username";
 } else {
     $sql = "SELECT losenord FROM elever WHERE anvandarnamn=:username";
 }
 
+# Kopplar till databas
 $db = kopplaDatabas();
 
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['username'=>$username]);
 
+# Skickar felmeddelande vid i fel i databasanrop
 if(!$stmt -> execute()) {
     $error = new stdClass();
     $error -> error = ["Fel vid databasanrop", $db->errorInfo()];
     skickaSvar($error, 400);
 }
 
+$out = new stdClass();
+
+# Skickar JSON-respons
 if($record = $stmt->fetchObject()) {
-    $out = new stdClass();
-    if(password_verify($password, $record -> losenord)) {
-        $out -> response = True;
+    if($record -> losenord === $password) {
+        $out -> loginStatus = True;
     } else {
-        $out -> response = False;
+        $out -> loginStatus = False;
     }
-    skickaSvar($out, 200);
-} else {
-    $out = new stdClass();
-    $out -> error = ["Post saknas", "användaren:$username finns inte"];
-    skickaSvar($out, 400);
 }
+skickaSvar($out, 200);
