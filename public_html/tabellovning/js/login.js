@@ -10,7 +10,7 @@ window.onload = function() {
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
 
-        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/verifyLogin.php?username=' + username + "&password=" + password + "&userType=" + userType)
+        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/verifyLogin.php?username=' + username + '&password=' + password + '&userType=' + userType)
             .then(function(response) {
                 if(response.status == 200) {
                     return response.json();

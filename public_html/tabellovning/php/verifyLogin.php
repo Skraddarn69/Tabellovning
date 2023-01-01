@@ -39,16 +39,16 @@ if($userType!=0 && $userType!=1 || $userType==="") {
 $db = kopplaDatabas();
 
 # Skapar sql-sats
-if($userType===0) {
-    $sql = "SELECT losenord FROM larare WHERE anvandarnamn=:username";
-} else {
+if($userType==0) {
     $sql = "SELECT losenord FROM elever WHERE anvandarnamn=:username";
+} else {
+    $sql = "SELECT losenord FROM larare WHERE anvandarnamn=:username";
 }
 
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['username'=>$username]);
 
-# Skickar felmeddelande vid i fel i databasanrop
+# Skickar felmeddelande vid fel i databasanrop
 if(!$stmt -> execute()) {
     $error = new stdClass();
     $error -> error = ["Fel vid databasanrop", $db->errorInfo()];
