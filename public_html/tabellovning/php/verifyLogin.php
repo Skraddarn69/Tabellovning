@@ -40,9 +40,9 @@ $db = kopplaDatabas();
 
 # Skapar sql-sats
 if($userType==0) {
-    $sql = "SELECT losenord FROM elever WHERE anvandarnamn=:username";
+    $sql = "SELECT ID, losenord FROM elever WHERE anvandarnamn=:username";
 } else {
-    $sql = "SELECT losenord FROM larare WHERE anvandarnamn=:username";
+    $sql = "SELECT ID, losenord FROM larare WHERE anvandarnamn=:username";
 }
 
 $stmt = $db -> prepare($sql);
@@ -63,5 +63,6 @@ if($record = $stmt->fetchObject()) {
     if($record -> losenord === $password) {
         $out -> loginStatus = True;
     }
+    $out -> ID = $record -> ID;
 }
 skickaSvar($out, 200);
