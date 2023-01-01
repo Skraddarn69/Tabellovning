@@ -10,6 +10,13 @@ window.onload = function() {
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
 
+        // Kolla så att alla formulärsfält är ifyllda
+        if(username === "" || password === "") {
+            alert("Användarnamn eller lösenord saknas");
+            return;
+        }
+
+        // Anropa API för att verifiera lösenord
         fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/verifyLogin.php?username=' + username + '&password=' + password + '&userType=' + userType)
             .then(function(response) {
                 if(response.status == 200) {
@@ -18,7 +25,9 @@ window.onload = function() {
             })
             .then(function(data) {
                 if(data.loginStatus) {
-                    console.log("Hej");
+                    if(userType === 0) {
+                        window.location = "../exercise.html";
+                    }
                 } else {
                     alert("Felaktigt användarnamn eller lösenord.");
                 }
