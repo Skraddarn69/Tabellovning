@@ -27,6 +27,8 @@ window.onload = function() {
                 if(data.loginStatus) {
                     if(userType == 0) {
                         window.location.assign("exercise.html?ID=" + data.ID);
+                    } else {
+                        console.log("Hello!");
                     }
                 } else {
                     alert("Felaktigt användarnamn eller lösenord.");
