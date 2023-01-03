@@ -28,7 +28,7 @@ window.onload = function() {
                     if(userType == 0) {
                         window.location.assign("exercise.html?ID=" + data.ID);
                     } else {
-                        console.log("Hello!");
+                        window.location.assign("teacher.html?ID=" + data.ID);
                     }
                 } else {
                     alert("Felaktigt användarnamn eller lösenord.");
