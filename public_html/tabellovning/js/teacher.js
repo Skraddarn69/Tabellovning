@@ -4,8 +4,8 @@ window.onload = function() {
     urlParams = new URLSearchParams(queryString);
     let ID = urlParams.get('ID');
 
-    // Anropa API för att hämta elever ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getStudents.php?ID=' + ID)
+    // Anropa API för att hämta klasser ur databas
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getStudents.php?teacherID=' + ID)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -14,6 +14,8 @@ window.onload = function() {
     .then(function(data) {
         appendStudents(data);
     })
+
+    // Fyll dropdown med klasser
 }
 
 // Fyll tabell med elever
