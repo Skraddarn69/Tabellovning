@@ -5,20 +5,47 @@ window.onload = function() {
     let ID = urlParams.get('ID');
 
     // Anropa API för att hämta klasser ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getStudents.php?teacherID=' + ID)
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getClasses.php?teacherID=' + ID)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
         }
     })
     .then(function(data) {
-        appendStudents(data);
+        // Fyll dropdown med klasser
+        appendClasses(data);
     })
-
-    // Fyll dropdown med klasser
 }
 
-// Fyll tabell med elever
+function appendClasses(data) {
+    let thisClass;
+    let dropdown = document.getElementById("classSelect");
+    let option;
+
+    for(let i = 0; i < data.classes.length; i++) {
+        thisClass = data.classes[i];
+        option = document.createElement("option");
+        option.innerHTML = thisClass.klass;
+        option.value = thisClass.ID;
+        option.onchange = getStudents(thisClass.ID)
+        dropdown.appendChild(option);
+    }
+}
+
+function getStudents(ID) {
+    // Anropa API för att hämta elever ur databas
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getStudents.php?classID=' + ID)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        // Fyll tabell med elever
+        appendStudents(data);
+    })
+}
+
 function appendStudents(data) {
     let table = document.getElementById("studentList");
 }
