@@ -3,18 +3,21 @@ window.onload = function() {
     queryString = window.location.search;
     urlParams = new URLSearchParams(queryString);
     let ID = urlParams.get('ID');
+    getClasses(ID);
 
-    // Anropa API för att hämta klasser ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getClasses.php?teacherID=' + ID)
-    .then(function(response) {
-        if(response.status == 200) {
-            return response.json();
-        }
-    })
-    .then(function(data) {
-        // Fyll dropdown med klasser
-        appendClasses(data);
-    })
+function getClasses(ID) {
+        // Anropa API för att hämta klasser ur databas
+        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getClasses.php?teacherID=' + ID)
+        .then(function(response) {
+            if(response.status == 200) {
+                return response.json();
+            }
+        })
+        .then(function(data) {
+            // Fyll dropdown med klasser
+            appendClasses(data);
+        })
+    }
 }
 
 function appendClasses(data) {
@@ -48,4 +51,6 @@ function getStudents(ID) {
 
 function appendStudents(data) {
     let table = document.getElementById("studentList");
+
+    
 }
