@@ -52,16 +52,18 @@ function getStudents(ID) {
     .then(function(data) {
         // Rensa tabell
         let table = document.getElementById("studentList");
-        while(table.childNodes[1]) {
-            table.removeChild(table.childNodes[1]);
+        while(table.childNodes[2]) {
+            table.removeChild(table.childNodes[2]);
         }
         
         // Lägg till elever i tabell om elever finns annars visa meddelande
         let message = document.getElementById("message");
         if(data.noStudents) {
             message.style.display = "unset";
+            table.style.display = "none";
         } else {
             message.style.display = "none";
+            table.style.display = "unset";
             appendStudents(data);
         }
     })
