@@ -56,9 +56,12 @@ function getStudents(ID) {
             table.removeChild(table.childNodes[1]);
         }
         
+        // Lägg till elever i tabell om elever finns annars visa meddelande
+        let message = document.getElementById("message");
         if(data.noStudents) {
-            console.log("Inga elever")
+            message.style.display = "unset";
         } else {
+            message.style.display = "none";
             appendStudents(data);
         }
     })
@@ -67,6 +70,8 @@ function getStudents(ID) {
 function appendStudents(data) {
     let student;
     let row;
+    let rows = [];
+    let defColor;
     let ID;
     let firstname;
     let lastname;
@@ -78,7 +83,11 @@ function appendStudents(data) {
         student = data.students[i];
         row = document.createElement("tr");
         row.onclick = function() {
-            row.style.background_color = "blue";
+            if(rows[i].style.backgroundColor == defColor) {
+                rows[i].style.backgroundColor = "cyan";
+            } else {
+                rows[i].style.backgroundColor = defColor;
+            }
         }
 
         ID = document.createElement("td");
@@ -99,5 +108,8 @@ function appendStudents(data) {
         row.appendChild(lastname);
         row.appendChild(username);
         table.appendChild(row);
+
+        rows.push(row);
+        defColor = rows[i].style.backgroundColor;
     }
 }
