@@ -86,10 +86,12 @@ function appendStudents(data) {
         row = document.createElement("tr");
         row.onclick = function() {
             if(rows[i].style.backgroundColor == defColor) {
+                for(let o = 0; o < rows.length; o++) {
+                    rows[o].style.backgroundColor = defColor;
+                }
                 rows[i].style.backgroundColor = "cyan";
-            } else {
-                rows[i].style.backgroundColor = defColor;
             }
+            appendResults(student.ID);
         }
 
         ID = document.createElement("td");
@@ -114,4 +116,8 @@ function appendStudents(data) {
         rows.push(row);
         defColor = rows[i].style.backgroundColor;
     }
+}
+
+function appendResults(ID) {
+    
 }
