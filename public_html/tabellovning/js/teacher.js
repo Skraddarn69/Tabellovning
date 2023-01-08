@@ -50,14 +50,15 @@ function getStudents(ID) {
         }
     })
     .then(function(data) {
-        // Rensa tabell
         let table = document.getElementById("studentList");
+        let message = document.getElementById("studMsg");
+
+        // Rensa tabell
         while(table.childNodes[2]) {
             table.removeChild(table.childNodes[2]);
         }
         
         // Lägg till elever i tabell om elever finns annars visa meddelande
-        let message = document.getElementById("message");
         if(data.noStudents) {
             message.style.display = "unset";
             table.style.display = "none";
@@ -91,7 +92,7 @@ function appendStudents(data) {
                 }
                 rows[i].style.backgroundColor = "cyan";
             }
-            appendResults(student.ID);
+            getResults(student.ID);
         }
 
         ID = document.createElement("td");
@@ -118,6 +119,35 @@ function appendStudents(data) {
     }
 }
 
-function appendResults(ID) {
+function getResults(ID) {
+    // Anropa API för att hämta resultat ur databas
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getResults.php?ID=' + ID)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        let table = document.getElementById("results");
+        let message = document.getElementById("resMsg");
+
+        // Rensa tabell
+        while(table.childNodes[2]) {
+            table.removeChild(table.childNodes[2]);
+        }
+
+        // Lägg till resultat i tabell om elever finns annars visa meddelande
+        if(data.noStudents) {
+            message.style.display = "unset";
+            table.style.display = "none";
+        } else {
+            message.style.display = "none";
+            table.style.display = "unset";
+            appendResults(data);
+        }
+    })
+}
+
+function appendResults(data) {
     
 }
