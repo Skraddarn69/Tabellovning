@@ -1,26 +1,26 @@
 window.onload = function() {
-    // Hämtar användar-ID ur URL-parametrar
+    // Hämta användar-ID ur URL-parametrar
     queryString = window.location.search;
     urlParams = new URLSearchParams(queryString);
     let ID = urlParams.get('ID');
     getClasses(ID);
+}
 
 function getClasses(ID) {
-        // Anropa API för att hämta klasser ur databas
-        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getClasses.php?teacherID=' + ID)
-        .then(function(response) {
-            if(response.status == 200) {
-                return response.json();
-            }
-        })
-        .then(function(data) {
-            if(data.noClasses) {
-                console.log("Inga klasser")
-            } else {
-                appendClasses(data);
-            }
-        })
-    }
+    // Anropa API för att hämta klasser ur databas
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getClasses.php?teacherID=' + ID)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        if(data.noClasses) {
+            console.log("Inga klasser");
+        } else {
+            appendClasses(data);
+        }
+    })
 }
 
 function appendClasses(data) {
@@ -64,8 +64,14 @@ function getStudents(ID) {
             table2.removeChild(table2.childNodes[2]);
         }
 
+        // Visa elevtabell
+        document.getElementById("studMenu").style.display = "unset";
+
         // Dölj inga resultat meddelande
         document.getElementById("resMsg").style.display = "none";
+
+        // Dölj redigeringsformulär
+        document.getElementById("editMenu").style.display = "none";
         
         // Lägg till elever i tabell om elever finns annars visa meddelande
         if(data.noStudents) {
@@ -126,7 +132,7 @@ function appendStudents(data) {
         edit = document.createElement("td");
         edit.innerHTML = "Redigera";
         edit.onclick = function() {
-            console.log("redigera elev med ID: " + data.students[i].ID);
+            appendEditForm();
         }
 
         erase = document.createElement("td");
@@ -206,4 +212,11 @@ function appendResults(data) {
         row.appendChild(date);
         table.appendChild(row);
     }
+}
+
+function appendEditForm() {
+    // Dölj och visa 
+    document.getElementById("resMenu").style.display = "none";
+    document.getElementById("studMeny").style.display = "none";
+    document.getElementById("editMenu").style.display = "unset";
 }
