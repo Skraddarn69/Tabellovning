@@ -24,16 +24,16 @@ if(!$stmt -> execute()) {
     skickaSvar($error, 400);
 }
 
+$out = new stdClass();
+$out -> noResults = false;
+
 if($dbRecords = $stmt->fetchAll()) {
-    $out = new stdClass();
     $out -> results=[];
     foreach($dbRecords as $row) {
         $out -> results[] = $row;
     }
-    skickaSvar($out, 200);
 } else {
-    $error = new stdClass();
-    $error -> error = ["Fel vid hämtning",
-            "Inga poster returnerades"];
-    skickaSvar($error, 400);
+    $out -> noResults = true;
 }
+
+skickaSvar($out, 200);

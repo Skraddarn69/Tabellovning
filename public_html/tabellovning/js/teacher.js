@@ -28,6 +28,7 @@ function appendClasses(data) {
     let dropdown = document.getElementById("classSelect");
     let option;
 
+    // Fyll dropdown med klasser
     for(let i = 0; i < data.classes.length; i++) {
         thisClass = data.classes[i];
         option = document.createElement("option");
@@ -50,21 +51,27 @@ function getStudents(ID) {
         }
     })
     .then(function(data) {
-        let table = document.getElementById("studentList");
+        let table1 = document.getElementById("studentList");
+        let table2 = document.getElementById("results");
         let message = document.getElementById("studMsg");
 
-        // Rensa tabell
-        while(table.childNodes[2]) {
-            table.removeChild(table.childNodes[2]);
+        // Rensa tabeller
+        while(table1.childNodes[2]) {
+            table1.removeChild(table1.childNodes[2]);
         }
+
+        while(table2.childNodes[2]) {
+            table2.removeChild(table2.childNodes[2]);
+        }
+
+        // Dölj inga resultat meddelande
+        document.getElementById("resMsg").style.display = "none";
         
         // Lägg till elever i tabell om elever finns annars visa meddelande
         if(data.noStudents) {
             message.style.display = "unset";
-            table.style.display = "none";
         } else {
             message.style.display = "none";
-            table.style.display = "unset";
             appendStudents(data);
         }
     })
@@ -81,10 +88,15 @@ function appendStudents(data) {
     let username;
     let table = document.getElementById("studentList");
 
+    // Dölj inga resultat meddelande
+    document.getElementById("resMsg").style.display = "none";
+
     // Lägg till tabellrader för alla elever
     for(let i = 0; i < data.students.length; i++) {
         student = data.students[i];
         row = document.createElement("tr");
+        
+        // Markera tabellrad och visa elevens resultat när man klickar på raden
         row.onclick = function() {
             if(rows[i].style.backgroundColor == defColor) {
                 for(let o = 0; o < rows.length; o++) {
@@ -92,7 +104,7 @@ function appendStudents(data) {
                 }
                 rows[i].style.backgroundColor = "cyan";
             }
-            getResults(student.ID);
+            getResults(data.students[i].ID);
         }
 
         ID = document.createElement("td");
@@ -136,18 +148,44 @@ function getResults(ID) {
             table.removeChild(table.childNodes[2]);
         }
 
-        // Lägg till resultat i tabell om elever finns annars visa meddelande
-        if(data.noStudents) {
+        // Lägg till resultat i tabell om eleven har resultat annars visa meddelande
+        if(data.noResults) {
             message.style.display = "unset";
-            table.style.display = "none";
         } else {
             message.style.display = "none";
-            table.style.display = "unset";
             appendResults(data);
         }
     })
 }
 
 function appendResults(data) {
-    
+    let table = document.getElementById("results");
+    let row;
+    let multTable;
+    let points;
+    let date;
+    let result;
+
+    // Visa resultat
+    document.getElementById("resMenu").style.display = "unset";
+
+    // Fyll tabell med resultat
+    for(let i = 0; i < data.results.length; i++) {
+        result = data.results[i];
+
+        multTable = document.createElement("td");
+        multTable.innerHTML = result.tabell;
+
+        points = document.createElement("td");
+        points.innerHTML = result.poang + "/10";
+
+        date = document.createElement("td");
+        date.innerHTML = result.datum;
+
+        row = document.createElement("tr");
+        row.appendChild(multTable);
+        row.appendChild(points);
+        row.appendChild(date);
+        table.appendChild(row);
+    }
 }
