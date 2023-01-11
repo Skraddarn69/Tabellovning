@@ -86,6 +86,8 @@ function appendStudents(data) {
     let firstname;
     let lastname;
     let username;
+    let edit;
+    let erase;
     let table = document.getElementById("studentList");
 
     // Dölj inga resultat meddelande
@@ -107,6 +109,7 @@ function appendStudents(data) {
             getResults(data.students[i].ID);
         }
 
+        // Skapa celler
         ID = document.createElement("td");
         ID.innerHTML = student.ID;
         ID.style.display = "none";
@@ -120,10 +123,25 @@ function appendStudents(data) {
         username = document.createElement("td");
         username.innerHTML = student.anvandarnamn;
 
+        edit = document.createElement("td");
+        edit.innerHTML = "Redigera";
+        edit.onclick = function() {
+            console.log("redigera elev med ID: " + data.students[i].ID);
+        }
+
+        erase = document.createElement("td");
+        erase.innerHTML = "X";
+        erase.onclick = function() {
+            console.log(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML))
+        }
+
+        // Lätt till celler till raden och lägg till raden i tabellen
         row.appendChild(ID);
         row.appendChild(firstname);
         row.appendChild(lastname);
         row.appendChild(username);
+        row.appendChild(edit);
+        row.appendChild(erase);
         table.appendChild(row);
 
         rows.push(row);
