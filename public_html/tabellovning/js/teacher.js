@@ -103,17 +103,6 @@ function appendStudents(data) {
     for(let i = 0; i < data.students.length; i++) {
         student = data.students[i];
         row = document.createElement("tr");
-        
-        // Markera tabellrad och visa elevens resultat när man klickar på raden
-        row.onclick = function() {
-            if(rows[i].style.backgroundColor == defColor) {
-                for(let o = 0; o < rows.length; o++) {
-                    rows[o].style.backgroundColor = defColor;
-                }
-                rows[i].style.backgroundColor = "cyan";
-            }
-            getResults(data.students[i].ID);
-        }
 
         // Skapa celler
         ID = document.createElement("td");
@@ -122,12 +111,21 @@ function appendStudents(data) {
 
         firstname = document.createElement("td");
         firstname.innerHTML = student.fornamn;
+        firstname.onclick = function() {
+            selectRow(rows, defColor, data, i);
+        }
 
         lastname = document.createElement("td");
         lastname.innerHTML = student.efternamn;
+        lastname.onclick = function() {
+            selectRow(rows, defColor, data, i);
+        }
 
         username = document.createElement("td");
         username.innerHTML = student.anvandarnamn;
+        username.onclick = function() {
+            selectRow(rows, defColor, data, i);
+        }
 
         edit = document.createElement("td");
         edit.innerHTML = "Redigera";
@@ -138,7 +136,9 @@ function appendStudents(data) {
         erase = document.createElement("td");
         erase.innerHTML = "X";
         erase.onclick = function() {
-            console.log(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML))
+            if(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML)) {
+                console.log("Done!");
+            }
         }
 
         // Lätt till celler till raden och lägg till raden i tabellen
@@ -153,6 +153,16 @@ function appendStudents(data) {
         rows.push(row);
         defColor = rows[i].style.backgroundColor;
     }
+}
+
+function selectRow(rows, defColor, data, i) {
+    if(rows[i].style.backgroundColor == defColor) {
+        for(let o = 0; o < rows.length; o++) {
+            rows[o].style.backgroundColor = defColor;
+        }
+        rows[i].style.backgroundColor = "cyan";
+    }
+    getResults(data.students[i].ID);
 }
 
 function getResults(ID) {
@@ -215,8 +225,8 @@ function appendResults(data) {
 }
 
 function appendEditForm() {
-    // Dölj och visa 
+    // Dölj elev- och resultatfält, visa redigeringsmeny
     document.getElementById("resMenu").style.display = "none";
-    document.getElementById("studMeny").style.display = "none";
+    document.getElementById("studMenu").style.display = "none";
     document.getElementById("editMenu").style.display = "unset";
 }
