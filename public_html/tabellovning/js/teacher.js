@@ -229,4 +229,21 @@ function appendEditForm() {
     document.getElementById("resMenu").style.display = "none";
     document.getElementById("studMenu").style.display = "none";
     document.getElementById("editMenu").style.display = "unset";
+
+    document.getElementById("editButton").onclick = function() {
+        editStudent(id);
+    }
+}
+
+function editStudent(id) {
+    // Anropa API för att uppdatera elev i databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editStudent.php')
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        
+    })
 }
