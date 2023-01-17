@@ -27,9 +27,15 @@ function appendClasses(data) {
     let thisClass;
     let dropdown = document.getElementById("classSelect");
     let option;
+    let i;
+
+    // Rensa dropdown
+    while(dropdown.hasChildNodes()) {
+        dropdown.removeChild(dropdown.firstChild);
+    }
 
     // Fyll dropdown med klasser
-    for(let i = 0; i < data.classes.length; i++) {
+    for(i = 0; i < data.classes.length; i++) {
         thisClass = data.classes[i];
         option = document.createElement("option");
         option.innerHTML = thisClass.klass;
