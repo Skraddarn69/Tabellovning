@@ -148,7 +148,7 @@ function appendStudents(data) {
         erase.innerHTML = "X";
         erase.onclick = function() {
             if(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML)) {
-                deleteStudent(id);
+                deleteStudent(data.students[i].ID);
             }
         }
 
@@ -299,7 +299,7 @@ function deleteStudent(id) {
             return response.json();
         }
     })
-    .then(function(data) {
+    .then(function() {
         getClasses(urlParams.get('ID'));
     })
 }

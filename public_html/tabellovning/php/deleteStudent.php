@@ -22,7 +22,6 @@ $stmt = $db -> prepare($sql);
 $stmt -> execute(['id'=>$id]);
 $antalPoster = $antalPoster + $stmt -> rowCount();
 
-var_dump($antalPoster);
 if($antalPoster===0) {
     $svar = new stdClass();
     $svar -> result = false;
