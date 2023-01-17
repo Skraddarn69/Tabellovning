@@ -7,6 +7,12 @@ window.onload = function() {
     } else {
         ID = null;
     }
+
+    // Skapa funktionalitet för tillbaka knapp
+    document.getElementById("back").onclick = function() {
+        window.location = "index.html"
+    }
+
     appendTables(ID);
 }
 
@@ -17,17 +23,6 @@ function appendTables(ID) {
     document.getElementById("results").style.display = "none";
     document.getElementById("exercise").style.display = "none";
     document.getElementsByTagName("h1")[0].innerHTML = "Välj tabeller";
-    let back = document.getElementById("back");
-
-    if(ID!==null) {
-        back.onclick = function() {
-            window.location.href = "studMenu.html";
-        }
-    } else {
-        back.onclick = function() {
-            window.location.href = "index.html";
-        }
-    }
 
     let surprise = document.getElementById("surprise");
     let cells = document.getElementsByTagName("td");

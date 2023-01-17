@@ -4,6 +4,11 @@ window.onload = function() {
     urlParams = new URLSearchParams(queryString);
     let ID = urlParams.get('ID');
     getClasses(ID);
+
+    // Skapa funktionalitet för tillbaka knapp
+    document.getElementById("back").onclick = function() {
+        window.location = "index.html";
+    }
 }
 
 function getClasses(ID) {

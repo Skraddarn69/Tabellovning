@@ -4,6 +4,11 @@ window.onload = function() {
     urlParams = new URLSearchParams(queryString);
     let userType = urlParams.get('userType');
 
+    // Skapa funktionalitet för tillbaka knapp
+    document.getElementById("back").onclick = function() {
+        window.location = "index.html";
+    }
+
     // Sätter onclick-attribut på login-knapp
     document.getElementById("loginButton").onclick = function() {
         // Hämta formulärsdata
