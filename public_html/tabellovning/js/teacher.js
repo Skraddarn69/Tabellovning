@@ -21,7 +21,7 @@ window.onload = function() {
     let dropdown = document.getElementById("classSelect");
     document.getElementById("deleteClass").onclick = function() {
         if(document.getElementById("studentList").getElementsByTagName("tr")[1]) {
-            alert("Kan inte radera, klassen innehåller elever. Radera alla elever i klassen först.")
+            alert("Kan inte radera, klassen innehåller elever. Radera alla elever i klassen först.");
         } else {
             deleteClass(dropdown.value);
         }
