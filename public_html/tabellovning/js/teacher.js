@@ -26,6 +26,11 @@ window.onload = function() {
             deleteClass(dropdown.value);
         }
     }
+
+    // Skapa funktionalitet för "ny elev"-knapp
+    document.getElementById("saveStudent").onclick = function() {
+        appendSaveForm(dropdown.value);
+    }
 }
 
 function getClasses(ID) {
@@ -250,6 +255,59 @@ function appendResults(data) {
         row.appendChild(date);
         table.appendChild(row);
     }
+}
+
+
+function appendSaveForm(id) {
+    // Dölj elev- och resultatfält, visa redigeringsmeny
+    document.getElementById("resMenu").style.display = "none";
+    document.getElementById("studMenu").style.display = "none";
+    document.getElementById("editMenu").style.display = "unset";
+
+    // Hämta formulärsfält
+    let idField = document.getElementById("id");
+    let firstnameField = document.getElementById("firstname");
+    let lastnameField = document.getElementById("lastname");
+    let usernameField = document.getElementById("username");
+    let passwordField = document.getElementById("password");
+
+    // Fyll i classid
+    idField.value = id;
+
+    // Generera användarnamn utifrån förnamn och efternamn
+    firstnameField.onchange = function() {
+        usernameField.value = firstnameField.value + "." + lastnameField.value;
+    }
+    lastnameField.onchange = function() {
+        usernameField.value = firstnameField.value + "." + lastnameField.value;
+    }
+
+    // Spara ändringar eller ge felmeddelande när användare klickar på spara
+    document.getElementById("editButton").onclick = function() {
+        if(firstnameField.value.trim() === "" || lastnameField.value.trim() === "" || usernameField.value.trim() === "" || passwordField.value.trim() === "") {
+            alert("Alla fält måste vara ifyllda.");
+        } else {
+            saveStudent(idField.value, firstnameField.value, lastnameField.value, usernameField.value, passwordField.value);
+        }
+    }
+
+    // Gå tillbaka till elevmeny när användare klickar på avbryt
+    document.getElementById("abortButton").onclick = function() {
+        getClasses(urlParams.get('ID'));
+    }
+}
+
+function saveStudent(id, firstname, lastname, username, password) {
+    // Anropa API för att spara elev i databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveStudent.php?classid=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        getClasses(urlParams.get('ID'));
+    })
 }
 
 function appendEditForm(id, firstname, lastname, username) {
