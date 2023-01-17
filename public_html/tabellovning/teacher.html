@@ -9,10 +9,9 @@
             <h1>Tabellträning</h1>
         </header>
         <main>
-            <label for="class">Klass:</label>
-            <select id="classSelect" name="class"></select><br>
             <div id="studMenu">
-                <p id="studMsg">Den här klassen är tom.</p>
+                <label for="class">Klass:</label>
+                <select id="classSelect" name="class"></select><br>
                 <table id="studentList">
                     <thead>
                         <th>Förnamn</th>
@@ -22,9 +21,9 @@
                         <th>Radera</th>
                     </thead>
                 </table>
+                <p id="studMsg">Den här klassen är tom.</p>
             </div>
             <div id="resMenu">
-                <p id="resMsg">Den här eleven har inga resultat.</p>
                 <table id="results">
                     <thead>
                         <th>Tabell</th>
@@ -32,14 +31,21 @@
                         <th>Datum</th>
                     </thead>
                 </table>
+                <p id="resMsg">Den här eleven har inga resultat.</p>
             </div>
             <div id="editMenu">
                 <form id="editForm">
-                    <input name="firstname" type="text">
-                    <input name="lastname" type="text">
-                    <input name="username" type="text">
-                    <input name="id" type="hidden">
+                    <label for="firstname">Förnamn:</label>
+                    <input id="firstname" name="firstname" type="text"><br>
+                    <label for="lastname">Efternamn:</label>
+                    <input id="lastname" name="lastname" type="text"><br>
+                    <label for="username">Användarnamn:</label>
+                    <input id="username" name="username" type="text"><br>
+                    <label for="password">Lösenord:</label>
+                    <input id="password" name="username" type="text"><br>
+                    <input id="id" name="id" type="hidden">
                     <input id="editButton" type="button" value="Spara">
+                    <input id="abortButton" type="button" value="Avbryt">
                 </form>
             </div>
         </main>

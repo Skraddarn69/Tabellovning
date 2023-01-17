@@ -130,7 +130,7 @@ function appendStudents(data) {
         edit = document.createElement("td");
         edit.innerHTML = "Redigera";
         edit.onclick = function() {
-            appendEditForm();
+            appendEditForm(data.students[i].ID, data.students[i].fornamn, data.students[i].efternamn, data.students[i].anvandarnamn);
         }
 
         erase = document.createElement("td");
@@ -224,26 +224,58 @@ function appendResults(data) {
     }
 }
 
-function appendEditForm() {
+function appendEditForm(id, firstname, lastname, username) {
     // Dölj elev- och resultatfält, visa redigeringsmeny
     document.getElementById("resMenu").style.display = "none";
     document.getElementById("studMenu").style.display = "none";
     document.getElementById("editMenu").style.display = "unset";
 
+    // Hämta formulärsfält
+    let idField = document.getElementById("id");
+    let firstnameField = document.getElementById("firstname");
+    let lastnameField = document.getElementById("lastname");
+    let usernameField = document.getElementById("username");
+    let passwordField = document.getElementById("password");
+
+    // Fyll formulär
+    idField.value = id;
+    firstnameField.value = firstname;
+    lastnameField.value = lastname;
+    usernameField.value = username;
+    passwordField.value = "";
+
+    // Generera användarnamn utifrån förnamn och efternamn
+    firstnameField.onchange = function() {
+        usernameField.value = firstnameField.value + "." + lastnameField.value;
+    }
+    lastnameField.onchange = function() {
+        usernameField.value = firstnameField.value + "." + lastnameField.value;
+    }
+
+    // Spara ändringar eller ge felmeddelande när användare klickar på spara
     document.getElementById("editButton").onclick = function() {
-        editStudent(id);
+        if(firstnameField.value.trim() === "" || lastnameField.value.trim() === "" || usernameField.value.trim() === "" || passwordField.value.trim() === "") {
+            alert("Alla fält måste vara ifyllda.");
+        } else {
+            editStudent(idField.value, firstnameField.value, lastnameField.value, usernameField.value, passwordField.value);
+        }
+    }
+
+    // Gå tillbaka till elevmeny när användare klickar på avbryt
+    document.getElementById("abortButton").onclick = function() {
+        getClasses(urlParams.get('ID'));
     }
 }
 
-function editStudent(id) {
+function editStudent(id, firstname, lastname, username, password) {
     // Anropa API för att uppdatera elev i databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editStudent.php')
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editStudent.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
         }
     })
     .then(function(data) {
-        
+        getClasses(urlParams.get('ID'));
     })
 }
