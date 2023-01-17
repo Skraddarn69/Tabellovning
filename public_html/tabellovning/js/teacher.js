@@ -148,7 +148,7 @@ function appendStudents(data) {
         erase.innerHTML = "X";
         erase.onclick = function() {
             if(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML)) {
-                console.log("Done!");
+                deleteStudent(id);
             }
         }
 
@@ -281,6 +281,19 @@ function appendEditForm(id, firstname, lastname, username) {
 function editStudent(id, firstname, lastname, username, password) {
     // Anropa API för att uppdatera elev i databasen
     fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editStudent.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        getClasses(urlParams.get('ID'));
+    })
+}
+
+function deleteStudent(id) {
+    // Anropa API för att radera elev ur databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/deleteStudent.php?id=' + id)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
