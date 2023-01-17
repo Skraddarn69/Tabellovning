@@ -9,6 +9,13 @@ window.onload = function() {
     document.getElementById("back").onclick = function() {
         window.location = "index.html";
     }
+
+    // Skapa funktionalitet för "spara klass"-knapp
+    let className = document.getElementById("className");
+    document.getElementById("saveClass").onclick = function() {
+        saveClass(className.value, ID);
+        className.value = "";
+    }
 }
 
 function getClasses(ID) {
@@ -301,5 +308,18 @@ function deleteStudent(id) {
     })
     .then(function() {
         getClasses(urlParams.get('ID'));
+    })
+}
+
+function saveClass(name, id) {
+    // Anropa API för att radera elev ur databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveClass.php?name=' + name + '&teachid=' + id)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function() {
+        getClasses(id);
     })
 }
