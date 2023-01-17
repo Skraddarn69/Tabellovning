@@ -16,6 +16,16 @@ window.onload = function() {
         saveClass(className.value, ID);
         className.value = "";
     }
+
+    // Skapa funktionalitet för "radera klass"-knapp
+    let dropdown = document.getElementById("classSelect");
+    document.getElementById("deleteClass").onclick = function() {
+        if(document.getElementById("studentList").getElementsByTagName("tr")[1]) {
+            alert("Kan inte radera, klassen innehåller elever. Radera alla elever i klassen först.")
+        } else {
+            deleteClass(dropdown.value);
+        }
+    }
 }
 
 function getClasses(ID) {
@@ -312,7 +322,7 @@ function deleteStudent(id) {
 }
 
 function saveClass(name, id) {
-    // Anropa API för att radera elev ur databasen
+    // Anropa API för att lägga till klass i databasen
     fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveClass.php?name=' + name + '&teachid=' + id)
     .then(function(response) {
         if(response.status == 200) {
@@ -321,5 +331,18 @@ function saveClass(name, id) {
     })
     .then(function() {
         getClasses(id);
+    })
+}
+
+function deleteClass(id) {
+    // Anropa API för att radera klass ur databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/deleteClass.php?id=' + id)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function() {
+        getClasses(urlParams.get('ID'));
     })
 }
