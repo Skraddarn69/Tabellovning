@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF8">
+    <title>Tabellträning</title>
+    <script src="js/teacher.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <body>
+        <header>
+            <h1>Tabellträning</h1>
+        </header>
+        <main>
+            <div id="navMenu">
+                <button id="back">Tillbaka</button>
+            </div>
+            <div id="teachMenu">
+                <button id="saveTeach">Ny elev</button>
+                <table id="studentList">
+                    <thead>
+                        <th>Förnamn</th>
+                        <th>Efternamn</th>
+                        <th>Användarnamn</th>
+                        <th>Redigera</th>
+                        <th>Radera</th>
+                    </thead>
+                </table>
+            </div>
+            <div id="editMenu">
+                <form id="editForm">
+                    <label for="firstname">Förnamn:</label>
+                    <input id="firstname" name="firstname" type="text"><br>
+                    <label for="lastname">Efternamn:</label>
+                    <input id="lastname" name="lastname" type="text"><br>
+                    <label for="username">Användarnamn:</label>
+                    <input id="username" name="username" type="text"><br>
+                    <label for="password">Lösenord:</label>
+                    <input id="password" name="username" type="text"><br>
+                    <input id="id" name="id" type="hidden">
+                    <input id="editButton" type="button" value="Spara">
+                    <input id="abortButton" type="button" value="Avbryt">
+                </form>
+            </div>
+        </main>
+    </body>
+</html>
