@@ -56,6 +56,9 @@ function appendClasses(data) {
     let option;
     let i;
 
+    // Visa tillbakaknapp
+    document.getElementById("back").style.display = "unset";
+
     // Rensa dropdown
     while(dropdown.hasChildNodes()) {
         dropdown.removeChild(dropdown.firstChild);
@@ -129,6 +132,9 @@ function appendStudents(data) {
     let erase;
     let table = document.getElementById("studentList");
 
+    // Visa resultattabell
+    document.getElementById("resMenu").style.display = "unset";
+
     // Dölj inga resultat meddelande
     document.getElementById("resMsg").style.display = "none";
 
@@ -161,12 +167,14 @@ function appendStudents(data) {
         }
 
         edit = document.createElement("td");
+        edit.class = "editCell";
         edit.innerHTML = "Redigera";
         edit.onclick = function() {
             appendEditForm(data.students[i].ID, data.students[i].fornamn, data.students[i].efternamn, data.students[i].anvandarnamn);
         }
 
         erase = document.createElement("td");
+        erase.class = "eraseCell";
         erase.innerHTML = "X";
         erase.onclick = function() {
             if(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML)) {
@@ -263,6 +271,7 @@ function appendSaveForm(id) {
     document.getElementById("resMenu").style.display = "none";
     document.getElementById("studMenu").style.display = "none";
     document.getElementById("editMenu").style.display = "unset";
+    document.getElementById("back").style.display = "none";
 
     // Hämta formulärsfält
     let idField = document.getElementById("id");
@@ -270,6 +279,13 @@ function appendSaveForm(id) {
     let lastnameField = document.getElementById("lastname");
     let usernameField = document.getElementById("username");
     let passwordField = document.getElementById("password");
+
+    // Töm formulärsfält
+    idField.value = "";
+    firstnameField.value = "";
+    lastnameField.value = "";
+    usernameField.value = "";
+    passwordField.value = "";
 
     // Fyll i classid
     idField.value = id;
@@ -311,10 +327,11 @@ function saveStudent(id, firstname, lastname, username, password) {
 }
 
 function appendEditForm(id, firstname, lastname, username) {
-    // Dölj elev- och resultatfält, visa redigeringsmeny
+    // Dölj elev- och resultatfält och tillbakaknapp, visa redigeringsmeny
     document.getElementById("resMenu").style.display = "none";
     document.getElementById("studMenu").style.display = "none";
     document.getElementById("editMenu").style.display = "unset";
+    document.getElementById("back").style.display = "none";
 
     // Hämta formulärsfält
     let idField = document.getElementById("id");
@@ -323,12 +340,18 @@ function appendEditForm(id, firstname, lastname, username) {
     let usernameField = document.getElementById("username");
     let passwordField = document.getElementById("password");
 
+    // Töm formulärsfält
+    idField.value = "";
+    firstnameField.value = "";
+    lastnameField.value = "";
+    usernameField.value = "";
+    passwordField.value = "";
+
     // Fyll formulär
     idField.value = id;
     firstnameField.value = firstname;
     lastnameField.value = lastname;
     usernameField.value = username;
-    passwordField.value = "";
 
     // Generera användarnamn utifrån förnamn och efternamn
     firstnameField.onchange = function() {

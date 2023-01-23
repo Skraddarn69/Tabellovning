@@ -85,7 +85,7 @@ $stmt = $db -> prepare($sql);
 $stmt -> execute(['anvandarnamn'=>$username]);
 if($stmt->fetch()) {
     $error = new stdClass();
-    $error -> error = ["Felaktig indata", "användarnamnet '$username' är redan taget"];
+    $error -> error = ["Ogiltigt användarnamn", "användarnamnet '$username' är redan taget"];
     skickaSvar($error, 400);
 }
 
