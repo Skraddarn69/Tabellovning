@@ -32,8 +32,10 @@ window.onload = function() {
                 if(data.loginStatus) {
                     if(userType == 0) {
                         window.location.assign("exercise.html?ID=" + data.ID);
-                    } else {
+                    } else if(userType == 1) {
                         window.location.assign("teacher.html?ID=" + data.ID);
+                    } else {
+                        window.location.assign("admin.html?ID=" + data.ID);
                     }
                 } else {
                     alert("Felaktigt användarnamn eller lösenord.");

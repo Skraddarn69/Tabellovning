@@ -29,7 +29,7 @@ if($password==="") {
     skickaSvar($error, 400);
 }
 
-if($userType!=0 && $userType!=1 || $userType==="") {
+if($userType!=0 && $userType!=1 && $userType!=2 || $userType==="") {
     $error = new stdClass();
     $error -> error = ["Felaktig indata", "'userType' får endast vara 0 eller 1"];
     skickaSvar($error, 400);
@@ -41,8 +41,10 @@ $db = kopplaDatabas();
 # Skapar sql-sats
 if($userType==0) {
     $sql = "SELECT ID, losenord FROM elever WHERE anvandarnamn=:username";
-} else {
+} elseif($userType==1) {
     $sql = "SELECT ID, losenord FROM larare WHERE anvandarnamn=:username";
+} else {
+    $sql = "SELECT ID, losenord FROM admin WHERE anvandarnamn=:username";
 }
 
 $stmt = $db -> prepare($sql);
