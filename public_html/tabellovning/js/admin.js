@@ -133,7 +133,7 @@ function selectRow(rows, defColor, i) {
 }
 
 function appendSaveForm() {
-    // Dölj elev- och resultatfält, visa redigeringsmeny
+    // Dölj lärarfält och visa redigeringsmeny
     document.getElementById("teachMenu").style.display = "none";
     document.getElementById("editMenu").style.display = "unset";
     document.getElementById("back").style.display = "none";
@@ -178,6 +178,68 @@ function appendSaveForm() {
 function saveTeacher(firstname, lastname, username, password) {
     // Anropa API för att spara lärare i databasen
     fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveTeacher.php?firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function() {
+        getTeachers();
+    })
+}
+
+function appendEditForm(id, firstname, lastname, username) {
+    // Dölj lärarfält och tillbakaknapp, visa redigeringsmeny
+    document.getElementById("teachMenu").style.display = "none";
+    document.getElementById("editMenu").style.display = "unset";
+    document.getElementById("back").style.display = "none";
+
+    // Hämta formulärsfält
+    let idField = document.getElementById("id");
+    let firstnameField = document.getElementById("firstname");
+    let lastnameField = document.getElementById("lastname");
+    let usernameField = document.getElementById("username");
+    let passwordField = document.getElementById("password");
+
+    // Töm formulärsfält
+    idField.value = "";
+    firstnameField.value = "";
+    lastnameField.value = "";
+    usernameField.value = "";
+    passwordField.value = "";
+
+    // Fyll formulär
+    idField.value = id;
+    firstnameField.value = firstname;
+    lastnameField.value = lastname;
+    usernameField.value = username;
+
+    // Generera användarnamn utifrån förnamn och efternamn
+    firstnameField.onchange = function() {
+        usernameField.value = firstnameField.value + "." + lastnameField.value;
+    }
+    lastnameField.onchange = function() {
+        usernameField.value = firstnameField.value + "." + lastnameField.value;
+    }
+
+    // Spara ändringar eller ge felmeddelande när användare klickar på spara
+    document.getElementById("editButton").onclick = function() {
+        if(firstnameField.value.trim() === "" || lastnameField.value.trim() === "" || usernameField.value.trim() === "" || passwordField.value.trim() === "") {
+            alert("Alla fält måste vara ifyllda.");
+        } else {
+            editTeacher(idField.value, firstnameField.value, lastnameField.value, usernameField.value, passwordField.value);
+        }
+    }
+
+    // Gå tillbaka till elevmeny när användare klickar på avbryt
+    document.getElementById("abortButton").onclick = function() {
+        getTeachers();
+    }
+}
+
+function editTeacher(id, firstname, lastname, username, password) {
+    // Anropa API för att uppdatera lärare i databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editTeacher.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
