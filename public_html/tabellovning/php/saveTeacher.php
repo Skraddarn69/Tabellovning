@@ -9,12 +9,6 @@ if($_SERVER['REQUEST_METHOD']!=="GET") {
     skickaSvar($error, 405);
 }
 
-if(!isset($_GET['classid'])) {
-    $error = new stdClass();
-    $error -> error = ["Felaktig indata", "Parametern 'classid' saknas"];
-    skickaSvar($error, 400);
-}
-
 if(!isset($_GET['firstname'])) {
     $error = new stdClass();
     $error -> error = ["Felaktig indata", "Parametern 'firstname' saknas"];
@@ -48,9 +42,6 @@ $lastname = strip_tags($lastname);
 $username = filter_input(INPUT_GET , 'username' ,FILTER_UNSAFE_RAW);
 $username = strip_tags($username);
 
-$classid = filter_input(INPUT_GET, 'classid', FILTER_UNSAFE_RAW);
-$classid = strip_tags($classid);
-
 $password = filter_input(INPUT_GET, 'password', FILTER_UNSAFE_RAW);
 $password = strip_tags($password);
 
@@ -72,12 +63,6 @@ if($username==="") {
     skickaSvar($error, 400);
 }
 
-if($classid==="") {
-    $error = new stdClass();
-    $error -> error = ["Felaktigt anrop", "'classid' får inte vara tomt"];
-    skickaSvar($error, 400);
-}
-
 if($password==="") {
     $error = new stdClass();
     $error -> error = ["Felaktigt anrop", "'password' får inte vara tomt"];
@@ -86,7 +71,7 @@ if($password==="") {
 
 $db = kopplaDatabas();
 
-$sql = "SELECT * from elever WHERE anvandarnamn=:anvandarnamn";
+$sql = "SELECT * from larare WHERE anvandarnamn=:anvandarnamn";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['anvandarnamn'=>$username]);
 if($stmt->fetch()) {
@@ -95,9 +80,9 @@ if($stmt->fetch()) {
     skickaSvar($error, 400);
 }
 
-$sql = "INSERT INTO elever (klassID, fornamn, efternamn, anvandarnamn, losenord) VALUES (:klassID, :fornamn, :efternamn, :anvandarnamn, :losenord)";
+$sql = "INSERT INTO larare (fornamn, efternamn, anvandarnamn, losenord) VALUES (:fornamn, :efternamn, :anvandarnamn, :losenord)";
 $stmt = $db -> prepare($sql);
-$stmt -> execute(['klassID'=>$classid, 'fornamn'=>$firstname, 'efternamn'=>$lastname, 'anvandarnamn'=>$username, 'losenord'=>$password]);
+$stmt -> execute(['fornamn'=>$firstname, 'efternamn'=>$lastname, 'anvandarnamn'=>$username, 'losenord'=>$password]);
 
 $antalPoster = $stmt -> rowCount();
 if($antalPoster===0) {

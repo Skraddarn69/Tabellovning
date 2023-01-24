@@ -2,6 +2,13 @@
 declare (strict_types=1);
 require_once "functions.php";
 
+# Kollar så att anropet skickats via GET
+if($_SERVER['REQUEST_METHOD']!=="GET") {
+    $error = new stdClass();
+    $error -> error = ["Felaktigt anrop", "Sidan ska anropas med GET"];
+    skickaSvar($error, 405);
+}
+
 // Skicka felmeddelande om 'teacherID' inte är angivet
 if(!isset($_GET['teacherID'])) {
     $error = new stdClass();
