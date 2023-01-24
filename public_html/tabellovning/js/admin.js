@@ -105,7 +105,7 @@ function appendTeachers(data) {
         erase.innerHTML = "X";
         erase.onclick = function() {
             if(confirm("Är du säker på att du vill radera läraren: " + firstname.innerHTML + " " + lastname.innerHTML)) {
-                deleteStudent(data.teachers[i].ID);
+                deleteTeacher(data.teachers[i].ID);
             }
         }
 
@@ -247,5 +247,22 @@ function editTeacher(id, firstname, lastname, username, password) {
     })
     .then(function() {
         getTeachers();
+    })
+}
+
+function deleteTeacher(id) {
+    // Anropa API för att radera lärare ur databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/deleteTeacher.php?id=' + id)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function(data) {
+        if(data.result) {
+            getTeachers();
+        } else {
+            alert("Kan inte radera. Läraren har klasser registrerade.");
+        }
     })
 }
