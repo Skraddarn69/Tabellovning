@@ -2,7 +2,7 @@
 declare (strict_types=1);
 require_once 'functions.php';
 
-# Kollar så att anropet skickats via POST
+# Kollar så att anropet skickats via GET
 if($_SERVER['REQUEST_METHOD']!=="GET") {
     $error = new stdClass();
     $error -> error = ["Felaktigt anrop", "Sidan ska anropas med GET"];
