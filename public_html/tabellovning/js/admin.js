@@ -165,7 +165,7 @@ function appendSaveForm() {
         if(firstnameField.value.trim() === "" || lastnameField.value.trim() === "" || usernameField.value.trim() === "" || passwordField.value.trim() === "") {
             alert("Alla fält måste vara ifyllda.");
         } else {
-            saveStudent(idField.value, firstnameField.value, lastnameField.value, usernameField.value, passwordField.value);
+            saveTeacher(firstnameField.value, lastnameField.value, usernameField.value, passwordField.value);
         }
     }
 
@@ -173,4 +173,17 @@ function appendSaveForm() {
     document.getElementById("abortButton").onclick = function() {
         getTeachers();
     }
+}
+
+function saveTeacher(firstname, lastname, username, password) {
+    // Anropa API för att spara lärare i databasen
+    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveTeacher.php?firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    .then(function(response) {
+        if(response.status == 200) {
+            return response.json();
+        }
+    })
+    .then(function() {
+        getTeachers();
+    })
 }
