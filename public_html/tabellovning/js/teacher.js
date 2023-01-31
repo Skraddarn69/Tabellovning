@@ -151,19 +151,19 @@ function appendStudents(data) {
         firstname = document.createElement("td");
         firstname.innerHTML = student.fornamn;
         firstname.onclick = function() {
-            selectRow(rows, defColor, data, i);
+            selectRow(rows, data, i);
         }
 
         lastname = document.createElement("td");
         lastname.innerHTML = student.efternamn;
         lastname.onclick = function() {
-            selectRow(rows, defColor, data, i);
+            selectRow(rows, data, i);
         }
 
         username = document.createElement("td");
         username.innerHTML = student.anvandarnamn;
         username.onclick = function() {
-            selectRow(rows, defColor, data, i);
+            selectRow(rows, data, i);
         }
 
         edit = document.createElement("td");
@@ -192,16 +192,17 @@ function appendStudents(data) {
         table.appendChild(row);
 
         rows.push(row);
-        defColor = rows[i].style.backgroundColor;
     }
 }
 
-function selectRow(rows, defColor, data, i) {
-    if(rows[i].style.backgroundColor == defColor) {
+function selectRow(rows, data, i) {
+    if(rows[i].style.backgroundColor == "") {
         for(let o = 0; o < rows.length; o++) {
-            rows[o].style.backgroundColor = defColor;
+            rows[o].style.backgroundColor = "";
+            rows[o].style.color = "";
         }
-        rows[i].style.backgroundColor = "cyan";
+        rows[i].style.backgroundColor = "green";
+        rows[i].style.color = "black";
     }
     getResults(data.students[i].ID);
 }
