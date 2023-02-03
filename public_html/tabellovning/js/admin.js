@@ -14,7 +14,7 @@ window.onload = function() {
 
 function getTeachers() {
     // Anropa API för att hämta lärare ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getTeachers.php')
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/getTeachers.php')
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -78,19 +78,19 @@ function appendTeachers(data) {
         firstname = document.createElement("td");
         firstname.innerHTML = teacher.fornamn;
         firstname.onclick = function() {
-            selectRow(rows, defColor, i);
+            selectRow(rows, i);
         }
 
         lastname = document.createElement("td");
         lastname.innerHTML = teacher.efternamn;
         lastname.onclick = function() {
-            selectRow(rows, defColor, i);
+            selectRow(rows, i);
         }
 
         username = document.createElement("td");
         username.innerHTML = teacher.anvandarnamn;
         username.onclick = function() {
-            selectRow(rows, defColor, i);
+            selectRow(rows, i);
         }
 
         edit = document.createElement("td");
@@ -104,7 +104,7 @@ function appendTeachers(data) {
         erase.class = "eraseCell";
         erase.innerHTML = "X";
         erase.onclick = function() {
-            if(confirm("Är du säker på att du vill radera läraren: " + firstname.innerHTML + " " + lastname.innerHTML)) {
+            if(confirm("Är du säker på att du vill radera läraren: " + data.teachers[i].fornamn + " " + data.teachers[i].efternamn)) {
                 deleteTeacher(data.teachers[i].ID);
             }
         }
@@ -119,16 +119,17 @@ function appendTeachers(data) {
         table.appendChild(row);
 
         rows.push(row);
-        defColor = rows[i].style.backgroundColor;
     }
 }
 
-function selectRow(rows, defColor, i) {
-    if(rows[i].style.backgroundColor == defColor) {
+function selectRow(rows, i) {
+    if(rows[i].style.backgroundColor == "") {
         for(let o = 0; o < rows.length; o++) {
-            rows[o].style.backgroundColor = defColor;
+            rows[o].style.backgroundColor = "";
+            rows[o].style.color = "";
         }
-        rows[i].style.backgroundColor = "cyan";
+        rows[i].style.backgroundColor = "green";
+        rows[i].style.color = "black";
     }
 }
 
@@ -177,7 +178,7 @@ function appendSaveForm() {
 
 function saveTeacher(firstname, lastname, username, password) {
     // Anropa API för att spara lärare i databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveTeacher.php?firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/saveTeacher.php?firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -239,7 +240,7 @@ function appendEditForm(id, firstname, lastname, username) {
 
 function editTeacher(id, firstname, lastname, username, password) {
     // Anropa API för att uppdatera lärare i databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editTeacher.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/editTeacher.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -252,7 +253,7 @@ function editTeacher(id, firstname, lastname, username, password) {
 
 function deleteTeacher(id) {
     // Anropa API för att radera lärare ur databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/deleteTeacher.php?id=' + id)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/deleteTeacher.php?id=' + id)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();

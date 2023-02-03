@@ -35,7 +35,7 @@ window.onload = function() {
 
 function getClasses(ID) {
     // Anropa API för att hämta klasser ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getClasses.php?teacherID=' + ID)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/getClasses.php?teacherID=' + ID)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -43,8 +43,12 @@ function getClasses(ID) {
     })
     .then(function(data) {
         if(data.noClasses) {
-            console.log("Inga klasser");
+            document.getElementById("editMenu").style.display = "none";
+            document.getElementById("resMenu").style.display = "none";
+            document.getElementById("classMsg").style.display = "unset";
+            document.getElementById("studMsg").style.display = "none";
         } else {
+            document.getElementById("classMsg").style.display = "none";
             appendClasses(data);
         }
     })
@@ -80,7 +84,7 @@ function appendClasses(data) {
 
 function getStudents(ID) {
     // Anropa API för att hämta elever ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getStudents.php?classID=' + ID)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/getStudents.php?classID=' + ID)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -177,7 +181,7 @@ function appendStudents(data) {
         erase.class = "eraseCell";
         erase.innerHTML = "X";
         erase.onclick = function() {
-            if(confirm("Är du säker på att du vill radera eleven: " + firstname.innerHTML + " " + lastname.innerHTML)) {
+            if(confirm("Är du säker på att du vill radera eleven: " + data.students[i].fornamn + " " + data.students[i].efternamn)) {
                 deleteStudent(data.students[i].ID);
             }
         }
@@ -193,6 +197,8 @@ function appendStudents(data) {
 
         rows.push(row);
     }
+
+    selectRow(rows, data, 0);
 }
 
 function selectRow(rows, data, i) {
@@ -209,7 +215,7 @@ function selectRow(rows, data, i) {
 
 function getResults(ID) {
     // Anropa API för att hämta resultat ur databas
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/getResults.php?ID=' + ID)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/getResults.php?ID=' + ID)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -316,7 +322,7 @@ function appendSaveForm(id) {
 
 function saveStudent(id, firstname, lastname, username, password) {
     // Anropa API för att spara elev i databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveStudent.php?classid=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/saveStudent.php?classid=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -379,7 +385,7 @@ function appendEditForm(id, firstname, lastname, username) {
 
 function editStudent(id, firstname, lastname, username, password) {
     // Anropa API för att uppdatera elev i databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/editStudent.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/editStudent.php?ID=' + id + '&firstname=' + firstname + '&lastname=' + lastname + '&username=' + username + '&password=' + password)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -392,7 +398,7 @@ function editStudent(id, firstname, lastname, username, password) {
 
 function deleteStudent(id) {
     // Anropa API för att radera elev ur databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/deleteStudent.php?id=' + id)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/deleteStudent.php?id=' + id)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -405,7 +411,7 @@ function deleteStudent(id) {
 
 function saveClass(name, id) {
     // Anropa API för att lägga till klass i databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveClass.php?name=' + name + '&teachid=' + id)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/saveClass.php?name=' + name + '&teachid=' + id)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();
@@ -418,7 +424,7 @@ function saveClass(name, id) {
 
 function deleteClass(id) {
     // Anropa API för att radera klass ur databasen
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/deleteClass.php?id=' + id)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/deleteClass.php?id=' + id)
     .then(function(response) {
         if(response.status == 200) {
             return response.json();

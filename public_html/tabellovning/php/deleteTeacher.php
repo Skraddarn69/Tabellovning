@@ -19,7 +19,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 $db = kopplaDatabas();
 
-$sql = "DELETE FROM larare WHERE ID=:id";
+$sql = "DELETE FROM DB46130.larare WHERE ID=:id";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['id'=>$id]);
 $antalPoster = $stmt -> rowCount();

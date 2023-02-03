@@ -69,7 +69,7 @@ if($poang<0|$poang>10) {
 
 $db = kopplaDatabas();
 
-$sql = "INSERT INTO resultat (elevID, tabell, poang, datum) VALUES (:elevID, :tabell, :poang, cast(:datum AS datetime))";
+$sql = "INSERT INTO DB46130.resultat (elevID, tabell, poang, datum) VALUES (:elevID, :tabell, :poang, cast(:datum AS datetime))";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['elevID'=>$elevID, 'tabell'=>$tabell, 'poang'=>$poang, 'datum'=>date("Y-m-d")]);
 $antaPoster = $stmt -> rowCount();

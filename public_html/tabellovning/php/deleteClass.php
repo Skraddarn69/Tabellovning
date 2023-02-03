@@ -25,7 +25,7 @@ if($id==="") {
 
 $db = kopplaDatabas();
 
-$sql = "SELECT * FROM elever WHERE klassID=:klassID";
+$sql = "SELECT * FROM DB46130.elever WHERE klassID=:klassID";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['klassID'=>$id]);
 if($stmt->fetch()) {
@@ -34,7 +34,7 @@ if($stmt->fetch()) {
     skickaSvar($error, 400);
 }
 
-$sql = "DELETE FROM klasser WHERE ID=:ID";
+$sql = "DELETE FROM DB46130.klasser WHERE ID=:ID";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['ID'=>$id]);
 $antaPoster = $stmt -> rowCount();

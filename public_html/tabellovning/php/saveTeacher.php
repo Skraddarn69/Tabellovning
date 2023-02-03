@@ -69,9 +69,11 @@ if($password==="") {
     skickaSvar($error, 400);
 }
 
+$password = password_hash($password, PASSWORD_DEFAULT);
+
 $db = kopplaDatabas();
 
-$sql = "SELECT * from larare WHERE anvandarnamn=:anvandarnamn";
+$sql = "SELECT * from DB46130.larare WHERE anvandarnamn=:anvandarnamn";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['anvandarnamn'=>$username]);
 if($stmt->fetch()) {
@@ -80,7 +82,7 @@ if($stmt->fetch()) {
     skickaSvar($error, 400);
 }
 
-$sql = "INSERT INTO larare (fornamn, efternamn, anvandarnamn, losenord) VALUES (:fornamn, :efternamn, :anvandarnamn, :losenord)";
+$sql = "INSERT INTO DB46130.larare (fornamn, efternamn, anvandarnamn, losenord) VALUES (:fornamn, :efternamn, :anvandarnamn, :losenord)";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['fornamn'=>$firstname, 'efternamn'=>$lastname, 'anvandarnamn'=>$username, 'losenord'=>$password]);
 

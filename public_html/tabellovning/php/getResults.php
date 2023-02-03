@@ -19,7 +19,7 @@ $ID = filter_input(INPUT_GET, 'ID', FILTER_SANITIZE_NUMBER_INT);
 
 $db = kopplaDatabas();
 
-$sql="SELECT tabell, poang, datum FROM resultat" 
+$sql="SELECT tabell, poang, datum FROM DB46130.resultat" 
     . " WHERE elevID=:ID"
     . " ORDER BY datum";
 $stmt = $db -> prepare($sql);

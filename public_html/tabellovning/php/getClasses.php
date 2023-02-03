@@ -25,7 +25,7 @@ if($teacherID==="") {
     skickaSvar($error, 400);
 }
 
-$sql="SELECT ID, klass FROM klasser WHERE lararID=:teacherID";
+$sql="SELECT ID, klass FROM DB46130.klasser WHERE lararID=:teacherID";
 
 // Koppla databas
 $db = kopplaDatabas();

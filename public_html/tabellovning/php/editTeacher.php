@@ -85,9 +85,11 @@ if($password==="") {
     skickaSvar($error, 400);
 }
 
+$password = password_hash($password, PASSWORD_DEFAULT);
+
 $db = kopplaDatabas();
 
-$sql = "UPDATE larare SET fornamn=:firstname, efternamn=:lastname, anvandarnamn=:username, losenord=:password WHERE ID=:ID";
+$sql = "UPDATE DB46130.larare SET fornamn=:firstname, efternamn=:lastname, anvandarnamn=:username, losenord=:password WHERE ID=:ID";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['firstname'=>$firstname, 'lastname'=>$lastname, 'username'=>$username, 'password'=>$password, 'ID'=>$ID]);
 $antalPoster = $stmt -> rowCount();

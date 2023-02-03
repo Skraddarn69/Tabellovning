@@ -40,11 +40,11 @@ $db = kopplaDatabas();
 
 # Skapar sql-sats
 if($userType==0) {
-    $sql = "SELECT ID, losenord FROM elever WHERE anvandarnamn=:username";
+    $sql = "SELECT ID, losenord FROM DB46130.elever WHERE anvandarnamn=:username";
 } elseif($userType==1) {
-    $sql = "SELECT ID, losenord FROM larare WHERE anvandarnamn=:username";
+    $sql = "SELECT ID, losenord FROM DB46130.larare WHERE anvandarnamn=:username";
 } else {
-    $sql = "SELECT ID, losenord FROM admin WHERE anvandarnamn=:username";
+    $sql = "SELECT ID, losenord FROM DB46130.adminLogin WHERE anvandarnamn=:username";
 }
 
 $stmt = $db -> prepare($sql);
@@ -62,7 +62,7 @@ $out -> loginStatus = False;
 
 # Skickar JSON-respons
 if($record = $stmt->fetchObject()) {
-    if($record -> losenord === $password) {
+    if(password_verify($password, $record -> losenord)) {
         $out -> loginStatus = True;
     }
     $out -> ID = $record -> ID;

@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD']!=="GET") {
     skickaSvar($error, 405);
 }
 
-$sql="SELECT ID, fornamn, efternamn, anvandarnamn FROM larare";
+$sql="SELECT ID, fornamn, efternamn, anvandarnamn FROM DB46130.larare";
 
 // Koppla databas
 $db = kopplaDatabas();

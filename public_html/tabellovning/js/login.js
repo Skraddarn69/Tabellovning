@@ -26,7 +26,7 @@ window.onload = function() {
         }
 
         // Anropa API för att verifiera lösenord
-        fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/verifyLogin.php?username=' + username + '&password=' + password + '&userType=' + userType)
+        fetch('https://www.datanom.ax/~46130/tabellovning/php/verifyLogin.php?username=' + username + '&password=' + password + '&userType=' + userType)
             .then(function(response) {
                 if(response.status == 200) {
                     return response.json();

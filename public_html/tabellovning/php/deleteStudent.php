@@ -19,12 +19,12 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 $db = kopplaDatabas();
 
-$sql = "DELETE FROM resultat WHERE elevID=:id";
+$sql = "DELETE FROM DB46130.resultat WHERE elevID=:id";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['id'=>$id]);
 $antalPoster = $stmt -> rowCount();
 
-$sql = "DELETE FROM elever WHERE ID=:id";
+$sql = "DELETE FROM DB46130.elever WHERE ID=:id";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['id'=>$id]);
 $antalPoster = $antalPoster + $stmt -> rowCount();

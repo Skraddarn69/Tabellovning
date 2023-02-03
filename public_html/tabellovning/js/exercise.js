@@ -30,16 +30,19 @@ function appendTables(ID) {
     let selected = [];
     for(let i=0;i<12;i++) {
         let cell = cells.item(i);
-        cell.style.backgroundColor = "initial";
+        cell.style.backgroundColor = "black";
+        cell.style.color = "green";
         cell.onclick = function() {
             if(cell.style.backgroundColor=="green") {
-                cell.style.backgroundColor = "initial";
+                cell.style.backgroundColor = "black";
+                cell.style.color = "green";
                 selected = selected.filter(checkCell);
                 function checkCell(value) {
                     return value != i + 1;
                 }
             } else if(selected.length<10) {
                 cell.style.backgroundColor = "green";
+                cell.style.color = "black";
                 selected.push(i + 1);
             }
         }
@@ -119,7 +122,7 @@ function appendProblem(selected, completed, score, ID, checklist) {
     } else {
         appendProblem(selected, completed, score, ID, checklist);
     }
-    form.onsubmit = function() {
+    document.getElementById("nextExercise").onclick = function() {
         let answer = document.getElementById("answer").value;
         if(answer==="") {
             alert("Fyll i svarsrutan innan du klickar på 'Nästa'.");
@@ -144,10 +147,10 @@ function appendResult(score, ID, selected) {
     let resultMenu = document.getElementById("results");
     let table;
     resultMenu.style.display = "unset";
-    resultMenu.getElementsByTagName("button")[0].onclick = function() {
+    resultMenu.getElementsByTagName("input")[0].onclick = function() {
         appendTables(ID);
     }
-    resultMenu.getElementsByTagName("button")[1].onclick = function() {
+    resultMenu.getElementsByTagName("input")[1].onclick = function() {
         window.location.href = "index.html";
     }
     let result = document.getElementsByTagName("p")[4];
@@ -175,7 +178,7 @@ function appendResult(score, ID, selected) {
 }
 
 function saveResult(ID, score, table) {
-    fetch('http://localhost/Miniprojekt/public_html/tabellovning/php/saveResult.php?elevID=' + ID + '&poang=' + score + '&tabell=' + table)
+    fetch('https://www.datanom.ax/~46130/tabellovning/php/saveResult.php?elevID=' + ID + '&poang=' + score + '&tabell=' + table)
         .then(function(response) {
             if(response.status == 200) {
                 return response.json();

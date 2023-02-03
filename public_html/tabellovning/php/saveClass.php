@@ -40,7 +40,7 @@ if($teachid==="") {
 
 $db = kopplaDatabas();
 
-$sql = "INSERT INTO klasser (klass, lararID) VALUES (:klass, :lararID)";
+$sql = "INSERT INTO DB46130.klasser (klass, lararID) VALUES (:klass, :lararID)";
 $stmt = $db -> prepare($sql);
 $stmt -> execute(['klass'=>$name, 'lararID'=>$teachid]);
 $antalPoster = $stmt -> rowCount();

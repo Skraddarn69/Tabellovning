@@ -1,12 +1,13 @@
 <?php
 
 function kopplaDatabas():PDO {
-    $dbDSN = "mysql:dbname=db46130;host=127.0.0.1;charset=utf8";
-    $dbUser = "root";
-    $dbPassword = "";
+    $dbHost = "localhost";
+    $dbDSN = "DB46130";
+    $dbUser = "LinusD";
+    $dbPassword = "RokkABiltemA69";
 
     try {
-        $db = new PDO($dbDSN, $dbUser, $dbPassword);
+        $db = new PDO("mysql:host=$dbHost;dbName=$dbDSN", $dbUser, $dbPassword);
     } catch (PDOException $ex) {
         $err = new stdClass();
         $err->error = [$ex->getMessage()];
